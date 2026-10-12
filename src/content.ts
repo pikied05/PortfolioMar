@@ -93,6 +93,8 @@ export type Project = {
   title: L
   summary: L
   role: L
+  cover?: string
+  images?: string[]
 }
 
 export const projects: Project[] = [
@@ -106,6 +108,8 @@ export const projects: Project[] = [
       es: "Un portafolio de arte hecho con React y Vite, diseñado alrededor de una tipografía lúdica y una narrativa que se parezca al artista.",
     },
     role: { en: "Design & Development", es: "Diseño y desarrollo" },
+    cover: "/projects/portfolio-site/cover.jpg",
+    images: ["/projects/portfolio-site/1.png", "/projects/portfolio-site/2.png", "/projects/portfolio-site/3.png", "/projects/portfolio-site/4.png", "/projects/portfolio-site/5.png"],
   },
   {
     slug: "studio-web",

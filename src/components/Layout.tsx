@@ -49,12 +49,12 @@ export default function Layout() {
 
   return (
     <div className="relative min-h-screen">
-      <header className={`absolute inset-x-0 top-0 z-30 flex h-[86px] items-center justify-between px-[22px] text-[12px] ${isHome ? "" : "md:pl-[100px]"}`}>
+      <header className={`absolute inset-x-0 top-0 z-30 flex h-[86px] items-center justify-between px-[22px] text-[12px] max-md:gap-3 max-md:px-4 ${isHome ? "" : "md:pl-[100px]"}`}>
         <div className="leading-tight">
           <p>{tr(ui.designPortfolio)}</p>
           <p>Mar Loa</p>
         </div>
-        <div className="absolute left-1/2 flex h-[50px] w-[179px] -translate-x-1/2 items-center justify-center bg-fog">
+        <div className="absolute left-1/2 flex h-[50px] w-[179px] -translate-x-1/2 items-center justify-center bg-fog max-md:static max-md:h-[40px] max-md:w-auto max-md:translate-x-0 max-md:px-1">
           <button
             onClick={() => setLang("en")}
             className={`px-3 py-2 transition-opacity hover:opacity-60 ${lang === "en" ? "font-medium underline underline-offset-4" : ""}`}

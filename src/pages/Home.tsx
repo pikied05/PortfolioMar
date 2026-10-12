@@ -139,8 +139,8 @@ function Hero() {
         <DownArrow className="left-[86.9%] top-[92.9%]" />
       </div>
 
-      <div className="flex min-h-screen flex-col items-center justify-center gap-8 px-6 pb-24 pt-28 text-center md:hidden">
-        <p className="font-display text-[32px] leading-tight">
+      <div className="flex min-h-[100svh] flex-col items-center justify-center gap-8 px-6 pb-24 pt-28 text-center md:hidden">
+        <p className="font-display text-[clamp(24px,8vw,40px)] leading-tight">
           DESIGN |<br />
           DEVELOPMENT
         </p>
@@ -181,7 +181,7 @@ function About() {
         </Reveal>
         <div>
           <Reveal from="scale">
-            <h2 className="font-display mb-10 text-center text-[clamp(48px,8.9vw,128px)] leading-none tracking-[0.21em] md:mb-12">
+            <h2 className="font-display mb-10 text-center text-[clamp(34px,10vw,64px)] leading-none tracking-[0.18em] md:mb-12 md:text-[clamp(64px,8.9vw,128px)] md:tracking-[0.21em]">
               {tr(ui.hello)}
             </h2>
           </Reveal>
@@ -222,7 +222,7 @@ function About() {
               <h3 className="font-display text-[clamp(18px,2vw,28px)] tracking-[0.21em]">{tr(ui.hardSkills)}</h3>
             </div>
             <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-4">
-              <img alt="Unity" src="/assets/c6c72.png" className="aspect-video w-[200px] object-contain" />
+              <img alt="Unity" src="/assets/c6c72.png" className="aspect-video w-[160px] object-contain md:w-[200px]" />
               <ul className="flex flex-wrap items-center gap-2">
                 <li title="Figma" className="grid size-[46px] cursor-default place-items-center rounded-[10px] bg-ink transition-transform duration-300 hover:-translate-y-1.5 hover:rotate-6">
                   <FigmaMark />

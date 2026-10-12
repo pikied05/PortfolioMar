@@ -9,7 +9,7 @@ export default function Projects() {
 
   return (
     <div className="mx-auto max-w-[1200px] px-6 pb-16 pt-32 md:px-12">
-      <h1 className="font-display mb-14 text-[clamp(28px,5vw,72px)] leading-tight">{tr(ui.projects)}</h1>
+      <h1 className="font-display break-words mb-14 text-[clamp(28px,5vw,72px)] leading-tight">{tr(ui.projects)}</h1>
       {years.map((y) => (
         <section key={y} className="mb-16">
           <div className="mb-8 flex items-center gap-6">
