@@ -16,7 +16,7 @@ export default function Category() {
       <Link to="/" className="text-[14px] font-medium hover:opacity-60">
         {tr(ui.back)}
       </Link>
-      <h1 className="font-display mb-12 mt-6 text-[clamp(28px,5vw,72px)] leading-tight">{tr(cat.label)}</h1>
+      <h1 className="font-display break-words mb-12 mt-6 text-[clamp(28px,5vw,72px)] leading-tight">{tr(cat.label)}</h1>
       {list.length ? (
         <div className="grid grid-cols-2 gap-6 md:grid-cols-3 md:gap-10">
           {list.map((p) => (

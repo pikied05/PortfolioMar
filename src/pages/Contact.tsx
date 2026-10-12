@@ -24,7 +24,7 @@ export default function Contact() {
 
   return (
     <div className="mx-auto max-w-[900px] px-6 pb-16 pt-32 md:px-12">
-      <h1 className="font-display mb-10 text-[clamp(28px,5.5vw,80px)] leading-tight">{tr(ui.contactTitle)}</h1>
+      <h1 className="font-display break-words mb-10 text-[clamp(28px,5.5vw,80px)] leading-tight">{tr(ui.contactTitle)}</h1>
       <p className="max-w-[640px] text-[20px] font-medium leading-[30px]">{tr(ui.contactText)}</p>
 
       <form onSubmit={onSubmit} className="mt-12 grid gap-5">

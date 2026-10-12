@@ -24,7 +24,7 @@ export default function Sidebar({ visible, homeSection }: { visible: boolean; ho
     <nav
       aria-label="Main"
       className={`fixed z-40 bg-white/90 backdrop-blur transition-all duration-500
-        max-md:inset-x-0 max-md:bottom-0 max-md:flex max-md:items-center max-md:justify-around max-md:border-t max-md:border-black/10 max-md:px-2 max-md:py-3
+        max-md:inset-x-0 max-md:bottom-0 max-md:flex max-md:items-center max-md:justify-around max-md:border-t max-md:border-black/10 max-md:px-1 max-md:pb-[max(0.5rem,env(safe-area-inset-bottom))] max-md:pt-2
         md:left-0 md:top-0 md:flex md:h-screen md:w-[74px] md:flex-col md:items-center md:justify-center md:gap-[clamp(14px,3vh,36px)]
         ${visible ? "translate-x-0 translate-y-0 opacity-100" : "pointer-events-none opacity-0 max-md:translate-y-full md:-translate-x-full"}`}
     >
@@ -39,8 +39,8 @@ export default function Sidebar({ visible, homeSection }: { visible: boolean; ho
             if (it.to === "/#about") document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })
           }}
           style={{ ["--len" as string]: tr(it.label).length }}
-          className={`relative rounded-full text-[13px] font-medium tracking-wide transition-all duration-300 active:scale-90
-            max-md:px-3 max-md:py-2
+          className={`relative rounded-full text-[13px] font-medium transition-all duration-300 active:scale-90
+            max-md:px-2.5 max-md:py-2 max-md:text-[11px] max-md:tracking-normal
             md:block md:h-[calc(var(--len)*0.72em+1.4em)] md:w-[2em] md:text-[clamp(13px,2.4vh,20px)]
             ${it.active ? "bg-ink text-white" : "hover:bg-fog"}`}
         >

@@ -1,5 +1,6 @@
 import { Link, Navigate, useParams } from "react-router"
 import { useLang } from "../i18n"
+import Gallery from "../components/Gallery"
 import { categories, projects, ui } from "../content"
 
 export default function ProjectDetail() {
@@ -13,13 +14,13 @@ export default function ProjectDetail() {
   const next = projects[(idx + 1) % projects.length]
 
   return (
-    <div className="mx-auto max-w-[1100px] px-6 pb-16 pt-32 md:px-12">
+    <div className="mx-auto max-w-[1200px] px-6 pb-16 pt-32 md:px-12">
       <Link to="/projects" className="text-[14px] font-medium hover:opacity-60">
         {tr(ui.back)}
       </Link>
-      <h1 className="font-display mb-10 mt-6 text-[clamp(28px,4.5vw,64px)] leading-tight">{tr(p.title)}</h1>
+      <h1 className="font-display break-words mb-10 mt-6 text-[clamp(28px,4.5vw,64px)] leading-tight">{tr(p.title)}</h1>
 
-      <div className="aspect-[16/9] w-full bg-fog" />
+      <Gallery cover={p.cover} images={p.images ?? []} alt={tr(p.title)} />
 
       <div className="mt-10 grid gap-10 md:grid-cols-[1fr_2fr]">
         <dl className="space-y-5 text-[16px]">
@@ -39,10 +40,6 @@ export default function ProjectDetail() {
         <p className="text-[20px] font-medium leading-[30px]">{tr(p.summary)}</p>
       </div>
 
-      <div className="mt-10 grid grid-cols-2 gap-6">
-        <div className="aspect-[4/3] bg-fog" />
-        <div className="aspect-[4/3] bg-fog" />
-      </div>
 
       <div className="mt-16 flex justify-between border-t-[3px] border-black pt-6 text-[16px] font-medium">
         <Link to={`/projects/${prev.slug}`} className="hover:opacity-60">
