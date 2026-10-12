@@ -1,0 +1,10 @@
+{
+  "description": "This interactive portfolio showcases design projects in both English and Spanish, allowing users to explore work by category and year while maintaining easy navigation.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
