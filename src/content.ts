@@ -102,8 +102,8 @@ export const projects: Project[] = [
     category: "web-development",
     title: { en: "Portfolio Site", es: "Sitio de portafolio" },
     summary: {
-      en: "A bilingual portfolio built with React and Vite, designed around playful typography and a single-scroll narrative.",
-      es: "Un portafolio bilingüe hecho con React y Vite, diseñado alrededor de una tipografía lúdica y una narrativa de un solo scroll.",
+      en: "An art portfolio built with React and Vite, designed around playful typography and a narrative that captures the artist's vision.",
+      es: "Un portafolio de arte hecho con React y Vite, diseñado alrededor de una tipografía lúdica y una narrativa que se parezca al artista.",
     },
     role: { en: "Design & Development", es: "Diseño y desarrollo" },
   },
