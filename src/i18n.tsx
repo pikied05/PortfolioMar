@@ -7,11 +7,23 @@ type Ctx = { lang: Lang; setLang: (l: Lang) => void; tr: (v: L) => string }
 
 const LangContext = createContext<Ctx | null>(null)
 
+// Idioma inicial: el que la persona eligió antes; si no hay, el primer idioma de su navegador
+function detectLang(): Lang {
+  try {
+    const saved = localStorage.getItem("lang")
+    if (saved === "es" || saved === "en") return saved
+  } catch {}
+  const browser = (navigator.languages?.[0] ?? navigator.language ?? "en").toLowerCase()
+  return browser.startsWith("es") ? "es" : "en"
+}
+
 export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>(() => (localStorage.getItem("lang") === "es" ? "es" : "en"))
+  const [lang, setLang] = useState<Lang>(detectLang)
 
   useEffect(() => {
-    localStorage.setItem("lang", lang)
+    try {
+      localStorage.setItem("lang", lang)
+    } catch {}
     document.documentElement.lang = lang
   }, [lang])
 
