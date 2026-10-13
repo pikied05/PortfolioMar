@@ -40,6 +40,9 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist   # si tu build genera otra carpeta (ej: build/) cambiá esto
+      
+      - name: SPA fallback
+        run: cp dist/index.html dist/404.html
 
   deploy:
     needs: build
