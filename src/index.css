@@ -89,3 +89,8 @@ body {
     transition-duration: 0.001ms !important;
   }
 }
+
+@keyframes bar {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
