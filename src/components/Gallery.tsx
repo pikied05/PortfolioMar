@@ -1,4 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type MouseEvent as ReactMouseEvent,
+  type PointerEvent as ReactPointerEvent,
+} from "react"
 import { asset } from "../asset"
 
 type Props = { cover?: string; images: string[]; alt: string }
@@ -6,13 +15,20 @@ type Props = { cover?: string; images: string[]; alt: string }
 const INTERVAL = 4500
 
 export default function Gallery({ cover, images, alt }: Props) {
-  const all = [...(cover ? [cover] : []), ...images].map(asset)
+  // Sin repetidos: si la portada también está en images, no se muestra dos veces
+  const all = [...new Set([...(cover ? [cover] : []), ...images])].map(asset)
   const total = all.length
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
   const [open, setOpen] = useState<number | null>(null)
   const [zoom, setZoom] = useState(false)
+  const [zoomW, setZoomW] = useState(0)
+  const [dims, setDims] = useState<{ w: number; h: number } | null>(null)
   const thumbs = useRef<HTMLDivElement>(null)
+  const scroller = useRef<HTMLDivElement>(null)
+  const drag = useRef<{ x: number; y: number; left: number; top: number } | null>(null)
+  const dragged = useRef(false)
+  const focus = useRef<{ rx: number; ry: number; cx: number; cy: number } | null>(null)
 
   const go = useCallback((i: number) => setIndex(((i % total) + total) % total), [total])
 
@@ -36,7 +52,14 @@ export default function Gallery({ cover, images, alt }: Props) {
   useEffect(() => {
     if (open === null) return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(null)
+      if (e.key === "Escape") {
+        // Con zoom, Escape primero sale del zoom; la segunda vez cierra el visor
+        if (zoom) setZoom(false)
+        else setOpen(null)
+        return
+      }
+      // Con zoom, las flechas mueven la imagen (scroll) en vez de cambiar de foto
+      if (zoom) return
       if (e.key === "ArrowRight") step(1)
       if (e.key === "ArrowLeft") step(-1)
     }
@@ -47,7 +70,104 @@ export default function Gallery({ cover, images, alt }: Props) {
       document.body.style.overflow = prev
       window.removeEventListener("keydown", onKey)
     }
-  }, [open])
+  }, [open, zoom])
+
+  // Tamaño real de la imagen abierta (para saber si es muy alta y cuánto ampliarla)
+  const current = open !== null ? all[open] : undefined
+  useEffect(() => {
+    setDims(null)
+    if (!current) return
+    let alive = true
+    const im = new Image()
+    im.onload = () => {
+      if (alive) setDims({ w: im.naturalWidth, h: im.naturalHeight })
+    }
+    im.src = current
+    return () => {
+      alive = false
+    }
+  }, [current])
+
+  // Al ampliar, deja bajo el cursor el punto donde hiciste clic; al salir del zoom, vuelve al inicio
+  useLayoutEffect(() => {
+    const el = scroller.current
+    if (!el) return
+    el.focus({ preventScroll: true })
+    const f = focus.current
+    if (zoom && f) {
+      const img = el.querySelector("img")
+      if (img) {
+        el.scrollLeft = f.rx * img.offsetWidth - f.cx
+        el.scrollTop = f.ry * img.offsetHeight - f.cy
+      }
+      focus.current = null
+    } else if (!zoom) {
+      el.scrollTo(0, 0)
+    }
+  }, [zoom, zoomW, open])
+
+  const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+    dragged.current = false
+    const el = scroller.current
+    if (!zoom || !el || e.pointerType !== "mouse" || e.button !== 0) return
+    drag.current = { x: e.clientX, y: e.clientY, left: el.scrollLeft, top: el.scrollTop }
+  }
+
+  // Arrastrar con el mouse para mover la imagen ampliada (en pantallas táctiles se mueve con el dedo)
+  const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const d = drag.current
+    const el = scroller.current
+    if (!d || !el) return
+    if (e.buttons === 0) {
+      drag.current = null
+      return
+    }
+    const dx = e.clientX - d.x
+    const dy = e.clientY - d.y
+    if (!dragged.current && Math.abs(dx) + Math.abs(dy) < 5) return
+    dragged.current = true
+    el.scrollLeft = d.left - dx
+    el.scrollTop = d.top - dy
+  }
+
+  const endDrag = () => {
+    drag.current = null
+  }
+
+  const onViewerClick = (e: ReactMouseEvent<HTMLDivElement>) => {
+    if (dragged.current) return
+    const target = e.target as HTMLElement
+    if (target.tagName === "IMG") {
+      if (zoom) {
+        setZoom(false)
+        return
+      }
+      const r = target.getBoundingClientRect()
+      const s = e.currentTarget.getBoundingClientRect()
+      focus.current = {
+        rx: (e.clientX - r.left) / r.width,
+        ry: (e.clientY - r.top) / r.height,
+        cx: e.clientX - s.left,
+        cy: e.clientY - s.top,
+      }
+      const natural = dims?.w ?? r.width * 2
+      setZoomW(Math.min(Math.max(natural, r.width * 1.8), r.width * 3))
+      setZoom(true)
+    } else if (zoom) {
+      setZoom(false)
+    } else {
+      setOpen(null)
+    }
+  }
+
+  // Imágenes muy largas (capturas de páginas completas) se ven al ancho de la pantalla y se recorren con scroll
+  const tall = dims ? dims.h / dims.w > 2.5 : false
+  const imgStyle: CSSProperties =
+    zoom && zoomW
+      ? { width: zoomW, height: "auto", maxWidth: "none", maxHeight: "none" }
+      : tall
+        ? { width: "min(94vw, 1100px)", height: "auto", maxWidth: "none", maxHeight: "none" }
+        : { maxWidth: "94vw", maxHeight: "88vh" }
 
   const round =
     "grid size-11 place-items-center rounded-full bg-ink text-[20px] text-white transition-transform hover:scale-110 active:scale-90"
@@ -136,15 +256,27 @@ export default function Gallery({ cover, images, alt }: Props) {
       )}
 
       {open !== null && all[open] && (
-        <div className="fixed inset-0 z-[70] bg-black/95" role="dialog" aria-modal="true" onClick={() => setOpen(null)}>
-          <div className={`flex size-full overflow-auto ${zoom ? "" : "items-center justify-center"}`} onClick={(e) => e.stopPropagation()}>
-            <img
-              src={all[open]}
-              alt={`${alt} ${open + 1}`}
-              onClick={() => setZoom((z) => !z)}
-              style={zoom ? { width: "200vw", maxWidth: "none", margin: "auto" } : undefined}
-              className={zoom ? "cursor-zoom-out" : "max-h-[88vh] max-w-[94vw] cursor-zoom-in object-contain"}
-            />
+        <div className="fixed inset-0 z-[70] bg-black/95" role="dialog" aria-modal="true">
+          <div
+            ref={scroller}
+            tabIndex={-1}
+            onClick={onViewerClick}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={endDrag}
+            onPointerCancel={endDrag}
+            onPointerLeave={endDrag}
+            className="absolute inset-0 select-none overflow-auto overscroll-contain outline-none"
+          >
+            <div className="flex min-h-full w-max min-w-full p-3">
+              <img
+                src={all[open]}
+                alt={`${alt} ${open + 1}`}
+                draggable={false}
+                style={imgStyle}
+                className={`m-auto block shrink-0 ${zoom ? "cursor-grab active:cursor-grabbing" : "cursor-zoom-in"}`}
+              />
+            </div>
           </div>
           <button type="button" onClick={() => { setOpen(null); go(open) }} aria-label="Close" className={`${round} absolute right-4 top-4 bg-white text-ink`}>
             ✕

@@ -117,13 +117,15 @@ export const projects: Project[] = [
     slug: "studio-web",
     year: 2026,
     category: "web-design",
-    title: { en: "Risograph Studio Website", es: "Sitio del estudio de risografía" },
+    title: { en: "Risograph Studio Website", es: "Web Laboratorio Satelital" },
     summary: {
       en: "Interface design for a risograph studio: catalog, service requests and a gallery of printed work.",
       es: "Diseño de interfaz para un estudio de risografía: catálogo, solicitudes de servicio y galería de trabajos impresos.",
     },
     role: { en: "UI Design and Development", es: "Diseño UI y desarrollo" },
     thumb: "/projects/thumbs/1-02.webp",
+    cover: "/projects/studio-web/1-01.webp",
+    images: ["/projects/studio-web/1-02.webp", "/projects/studio-web/1-03.webp", "/projects/studio-web/1-04.webp"],
   },
   {
     slug: "barber-software",
@@ -136,6 +138,8 @@ export const projects: Project[] = [
     },
     role: { en: "Design & Development", es: "Diseño y desarrollo" },
     thumb: "/projects/thumbs/1-03.webp",
+    cover: "/projects/barber-software/1-01.webp",
+    images: ["/projects/barber-software/1-02.webp", "/projects/barber-software/1-03.webp", "/projects/barber-software/1-04.webp", "/projects/barber-software/1-05.webp", "/projects/barber-software/1-06.webp"],
   },
     {
     slug: "riso-zine",
@@ -148,6 +152,8 @@ export const projects: Project[] = [
     },
     role: { en: "Editorial Design", es: "Diseño editorial" },
     thumb: "/projects/thumbs/1.webp",
+    cover: "/projects/riso-zine/cover.JPG",
+    images: ["/projects/riso-zine/1-01.webp", "/projects/riso-zine/1-02.webp", "/projects/riso-zine/1-03.webp"],
   },
   {
     slug: "remnants-of-the-rift",
