@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react"
+import { asset } from "../asset"
 
 type Props = { cover?: string; images: string[]; alt: string }
 
 const INTERVAL = 4500
 
 export default function Gallery({ cover, images, alt }: Props) {
-  const all = [...(cover ? [cover] : []), ...images]
+  const all = [...(cover ? [cover] : []), ...images].map(asset)
   const total = all.length
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)

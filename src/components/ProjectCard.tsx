@@ -1,14 +1,16 @@
 import { Link } from "react-router"
 import { useLang } from "../i18n"
 import type { Project } from "../content"
+import { asset } from "../asset"
 
 export default function ProjectCard({ project }: { project: Project }) {
   const { tr } = useLang()
+  const img = project.thumb ?? project.cover
   return (
     <Link to={`/projects/${project.slug}`} className="group block">
       <div className="relative aspect-[296/374] w-full overflow-hidden bg-fog transition-all duration-300 group-hover:-translate-y-2 group-hover:rotate-[-1.5deg] group-hover:shadow-[8px_8px_0_#000]">
-        {(project.thumb ?? project.cover) && (
-          <img src={project.thumb ?? project.cover} alt={tr(project.title)} loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
+        {img && (
+          <img src={asset(img)} alt={tr(project.title)} loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
         )}
         <span className="absolute z-10 left-3 top-3 text-[12px] font-medium transition-colors group-hover:text-white">{project.year}</span>
         <span className="absolute inset-0 -translate-y-full bg-ink transition-transform duration-500 group-hover:translate-y-0" />

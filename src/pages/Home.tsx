@@ -5,6 +5,7 @@ import { categories, heroLines, projects, ui } from "../content"
 import SectionBar from "../components/SectionBar"
 import ProjectCard from "../components/ProjectCard"
 import Reveal from "../components/Reveal"
+import { asset } from "../asset"
 
 const featured = [...projects].sort((a, b) => b.year - a.year).slice(0, 4)
 
@@ -39,7 +40,7 @@ function DownArrow({ className }: { className: string }) {
         <div className="rotate-90">
           <div className="relative h-0 w-[44px]">
             <div className="absolute inset-[-14.73px_-4.55%_-14.73px_0]">
-              <img alt="" className="block size-full max-w-none" src="/assets/4481e.svg" />
+              <img alt="" className="block size-full max-w-none" src={asset("/assets/4481e.svg")} />
             </div>
           </div>
         </div>
@@ -114,7 +115,7 @@ function Hero() {
           className="absolute left-[36.1%] top-[57%] h-[14.75%] w-[27.3%]"
         >
           <div className="group relative grid size-full place-items-center transition-transform duration-500 hover:scale-105 hover:rotate-[-3deg]">
-            <img alt="" src="/assets/0cb85.svg" className="absolute inset-0 size-full max-w-none" />
+            <img alt="" src={asset("/assets/0cb85.svg")} className="absolute inset-0 size-full max-w-none" />
             <span className="font-display relative translate-y-[2%] text-[6.67cqw] leading-none">2026</span>
           </div>
         </div>
@@ -173,7 +174,7 @@ function About() {
         <Reveal from="left" className="md:-ml-8">
           <img
             alt="Mar Loa illustration"
-            src="/assets/c07cd.png"
+            src={asset("/assets/c07cd.png")}
             loading="lazy"
             decoding="async"
             className="animate-float mx-auto aspect-square w-full max-w-[676px] object-cover"
@@ -222,7 +223,7 @@ function About() {
               <h3 className="font-display text-[clamp(18px,2vw,28px)] tracking-[0.21em]">{tr(ui.hardSkills)}</h3>
             </div>
             <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-4">
-              <img alt="Unity" src="/assets/c6c72.png" className="aspect-video w-[160px] object-contain md:w-[200px]" />
+              <img alt="Unity" src={asset("/assets/c6c72.png")} className="aspect-video w-[160px] object-contain md:w-[200px]" />
               <ul className="flex flex-wrap items-center gap-2">
                 <li title="Figma" className="grid size-[46px] cursor-default place-items-center rounded-[10px] bg-ink transition-transform duration-300 hover:-translate-y-1.5 hover:rotate-6">
                   <FigmaMark />
@@ -248,7 +249,7 @@ function About() {
             </div>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <div className="relative grid h-[89px] w-[192px] -rotate-[8deg] place-items-center transition-transform duration-300 hover:scale-110 hover:-rotate-[2deg]">
-                <img alt="" src="/assets/8f4b7.svg" className="absolute inset-0 size-full max-w-none" />
+                <img alt="" src={asset("/assets/8f4b7.svg")} className="absolute inset-0 size-full max-w-none" />
                 <p className="relative -rotate-[4deg] text-center text-[20px] font-medium leading-[30px]">
                   {tr(ui.spanish)}
                   <br />
@@ -256,7 +257,7 @@ function About() {
                 </p>
               </div>
               <div className="relative grid h-[89px] w-[192px] rotate-[13.5deg] place-items-center transition-transform duration-300 hover:scale-110 hover:rotate-[6deg]">
-                <img alt="" src="/assets/48861.svg" className="absolute inset-0 size-full max-w-none" />
+                <img alt="" src={asset("/assets/48861.svg")} className="absolute inset-0 size-full max-w-none" />
                 <p className="relative rotate-[2deg] text-center text-[20px] font-medium leading-[30px]">
                   {tr(ui.english)}
                   <br />
